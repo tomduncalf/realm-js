@@ -1,5 +1,5 @@
 # Starting from a slimmed version of the latest stable Debian
-FROM debian:stretch-20210721-slim
+FROM debian:stretch-20210927-slim
 
 # Setting environment variables for versions
 # See https://developer.android.com/studio/#command-tools for the latest SDK version
@@ -14,8 +14,6 @@ ENV LANG C.UTF-8
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV NVM_DIR /tmp/.nvm
 
-# Because we're using the slim variant of Debian some directories (expected when installing openjdk) are missing
-RUN mkdir /usr/share/man/man1
 
 # Install dependencies
 ENV DEBIAN_FRONTEND noninteractive
@@ -61,7 +59,7 @@ RUN echo 'Installing Android SDK' && \
                      "platform-tools" \
                      "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
                      "platforms;android-26" \
-                     "cmake;3.10.2.4988404"\
+                     "cmake;3.18.1"\
                      "system-images;android-29;default;x86" && \
     \
     echo 'Installing Android NDK' && \
@@ -78,8 +76,8 @@ RUN mkdir -p $NVM_DIR \
  && chmod a+rwX -R $NVM_DIR
 
 # Ensure a new enough version of CMake is available.
-RUN mkdir -p /home/jenkins/cmake && \
-    cd /home/jenkins/cmake && \
-    curl -O -J https://cmake.org/files/v3.17/cmake-3.17.5-Linux-x86_64.tar.gz &&\
-    tar zxf cmake-3.17.5-Linux-x86_64.tar.gz
-ENV PATH "/home/jenkins/cmake/cmake-3.17.5-Linux-x86_64/bin:$PATH"
+RUN mkdir -p /home/jenkins/cmake \
+    && cd /home/jenkins/cmake \
+    && curl -O -J https://cmake.org/files/v3.21/cmake-3.21.3-linux-x86_64.tar.gz \
+    && tar zxf cmake-3.21.3-linux-x86_64.tar.gz
+ENV PATH "/home/jenkins/cmake/cmake-3.21.3-linux-x86_64/bin/:$PATH"

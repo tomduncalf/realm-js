@@ -66,7 +66,7 @@ export default [
   {
     input: "types/generated/index.d.ts",
     output: {
-      file: "dist/bundle.d.ts",
+      file: pkg.types,
       format: "es",
     },
     plugins: [dts(), nodeResolve()],

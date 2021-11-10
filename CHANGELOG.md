@@ -1,7 +1,13 @@
 x.x.x Release notes (yyyy-MM-dd)
 =============================================================
+
+### Deprecations
+* `EmailPasswordAuth` method calls using positional arguments are being deprecated in favour of using a single object dictionary argument. See "Examples of how to update to the new API" in the description of https://github.com/realm/realm-js/pull/4041 for examples of how to update each method call.
+    * The existing methods will be removed in the next major version.
+    * The existing methods will continue to work but will output a deprecation warning to the console in development mode when used, of the form: `Deprecation warning from Realm: resetPassword(password, token, token_id) is deprecated and will be removed in a future major release. Consider switching to resetPassword({ password, token, token_id })`.
+
 ### Enhancements
-* None.
+* New consistent API for `EmailPasswordAuth` methods, using a single object dictionary rather than positional arguments, to fix inconsistencies and make usage clearer. The existing API is being deprecated (see above). ([#3943](https://github.com/realm/realm-js/issues/3943))
 
 ### Fixed
 * Using `sort`, `distinct`, or `limit` as property name in query expression would cause an `Invalid predicate` error. ([realm/realm-java#7545](https://github.com/realm/realm-java/issues/7545), since v10.0.2)
@@ -18,11 +24,14 @@ x.x.x Release notes (yyyy-MM-dd)
 * File format: generates Realms with format v22 (reads and upgrades file format v5 or later for non-synced Realm, upgrades file format v10 or later for synced Realms).
 
 ### Internal
-* Adding use of [ccache](https://ccache.dev/) in build scripts, XCode projects and the integration tests GHA workflow.
 * Upgraded Realm Core from v11.4.1 to v10.6.0.
+* Adding use of [ccache](https://ccache.dev/) in build scripts, XCode projects and the integration tests GHA workflow.
 * Change Apple/Linux temporary directory to default to the environment's `TMPDIR` if available. This is primarily used by tests. ([realm/realm-core#4921](https://github.com/realm/realm-core/issues/4921))
 * Minor speed improvement in property setters. ([#4058](https://github.com/realm/realm-js/pull/4058) and [realm/realm-core#5011](https://github.com/realm/realm-core/pull/5011))
 * Adding use of [ccache](https://ccache.dev/) in build scripts, XCode projects and the integration tests GHA workflow.
+* Dropped using `install-local` in the integration tests, in favour of a more involved Metro configuration.
+* Adding combined type definition for `Realm.objects()` and `Realm.objectForPrimaryKey()` so they can be cleanly wrapped.
+* Adding colorized compiler diagnostics if using Ninja.
 
 10.9.1 Release notes (2021-10-20)
 =============================================================
